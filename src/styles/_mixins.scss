@@ -1,0 +1,71 @@
+@import './variables';
+@import './functions';
+
+@mixin button($isPrimary: false) {
+  background-color: lightgray;
+  font-size: 18px;
+  font-weight: 700;
+  border-radius: radius('lg');
+  padding: 8px 16px;
+  color: gray;
+
+  @if $isPrimary {
+    background-color: color('primary');
+    color: color('light');
+  } @else {
+    &.active,
+    &:hover {
+      background-color: color('primary');
+      color: color('light');
+    }
+  }
+}
+
+@mixin center-block {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@mixin pseudo($content: '') {
+  content: $content;
+  display: block;
+  position: absolute;
+}
+
+@mixin text-ellipsis() {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+@mixin screen($width, $type: max) {
+  @if map_has_key($breakpoints, $width) {
+    $width: map_get($breakpoints, $width);
+
+    @if $type == max {
+      $width: $width - 1px;
+    }
+
+    @media only screen and (#{$type}-width: $width) {
+      @content;
+    }
+  }
+}
+
+@mixin fill-img() {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  font-family: 'object-fit: cover;';
+}
+
+@mixin size($size) {
+  width: $size;
+  height: $size;
+}

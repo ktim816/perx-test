@@ -1,7 +1,0 @@
-@function color($color) {
-  @return map-get($colors, $color);
-}
-
-@function radius($radius) {
-  @return map-get($border-radius, $radius);
-}

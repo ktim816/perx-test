@@ -6,6 +6,10 @@ import {RootState, TableChangedProps} from '@/types';
 import isEmpty from 'lodash/isEmpty';
 
 import {
+  uniq,
+} from '@/helpers';
+
+import {
   fetchVehicles,
   fetchDealers,
   getDealerIds,
@@ -39,7 +43,8 @@ export function fetchTableData(params: TableChangedProps) {
 
       const vehicleDealerIds = getDealerIds(vehicles.data);
       const dealerIds = dealers.map((dealer: any) => dealer.id);
-      const uniqDealerIds = vehicleDealerIds.filter((id: string) => !dealerIds.includes(id));
+      const uniqDealerIds = uniq(vehicleDealerIds)
+        .filter((id: string) => !dealerIds.includes(id));
 
       let newDealers: AxiosResponse<any> | undefined;
 

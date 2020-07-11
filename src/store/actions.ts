@@ -3,17 +3,20 @@ import {AxiosResponse} from 'axios';
 
 import {
   TableChangedProps,
+  FetchTableDataStart,
   FetchTableDataError,
-  DataLoading,
-  FetchTableDataSuccess
+  FetchTableDataSuccess,
 } from '@/types';
 
-export const loadingData = (): DataLoading => ({
-  type: actionTypes.DATA_LOADING,
+export const fetchTableDataStart = (): FetchTableDataStart => ({
+  type: actionTypes.FETCH_TABLE_DATA_START,
 });
 
 export const fetchTableDataSuccess = (
-  response: AxiosResponse<any>,
+  response: {
+    vehicles: AxiosResponse<any>,
+    dealers: any[],
+  },
   params: TableChangedProps,
 ): FetchTableDataSuccess => ({
   type: actionTypes.FETCH_TABLE_DATA_SUCCESS,

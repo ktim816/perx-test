@@ -4,6 +4,7 @@ import {TablePaginationConfig} from 'antd/lib/table';
 
 export interface RootState {
   vehicles: any[];
+  dealers: any[];
   loading: boolean;
   error: string;
   pagination: TablePaginationConfig;
@@ -14,13 +15,16 @@ export interface TableChangedProps {
 }
 
 // Action Creators
-export interface DataLoading {
-  type: typeof actionTypes.DATA_LOADING;
+export interface FetchTableDataStart {
+  type: typeof actionTypes.FETCH_TABLE_DATA_START;
 }
 
 export interface FetchTableDataSuccess {
   type: typeof actionTypes.FETCH_TABLE_DATA_SUCCESS;
-  response: AxiosResponse<any>;
+  response: {
+    vehicles: AxiosResponse<any>;
+    dealers: any[];
+  },
   params: TableChangedProps;
 }
 
@@ -31,6 +35,6 @@ export interface FetchTableDataError {
 
 // Combine all actions into one
 export type ActionCreators =
-  DataLoading |
+  FetchTableDataStart |
   FetchTableDataSuccess |
   FetchTableDataError;

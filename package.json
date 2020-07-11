@@ -2,6 +2,7 @@
   "name": "perx-test",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://perx-test-c4667.firebaseapp.com/",
   "dependencies": {
     "@babel/core": "7.10.4",
     "@svgr/webpack": "5.4.0",

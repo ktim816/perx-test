@@ -1,5 +1,10 @@
 import * as actionTypes from './types';
-import {RootState, ActionCreators} from '@/types';
+
+import {
+  RootState,
+  ActionCreators,
+  FetchTableDataSuccess
+} from '@/types';
 
 import {
   update,
@@ -7,29 +12,27 @@ import {
 
 const initialState: RootState = {
   vehicles: [],
+  dealers: [],
   loading: false,
   error: '',
   pagination: {
     current: 1,
     pageSize: 20,
-    position: ['bottomCenter']
+    position: [
+      'topCenter',
+      'bottomCenter'
+    ],
   },
 };
 
 export default (state = initialState, action: ActionCreators): RootState => {
   switch (action.type) {
-    case actionTypes.DATA_LOADING:
+    case actionTypes.FETCH_TABLE_DATA_START:
       return update(state, {
         loading: true,
       });
     case actionTypes.FETCH_TABLE_DATA_SUCCESS:
-      return update(state, {
-        vehicles: action.response.data,
-        pagination: update(action.params.pagination, {
-          total: action.response.headers['x-total-count']
-        }),
-        loading: false,
-      });
+      return updateTableData(state, action);
     case actionTypes.FETCH_TABLE_DATA_ERROR:
       return update(state, {
         loading: false,
@@ -39,3 +42,16 @@ export default (state = initialState, action: ActionCreators): RootState => {
       return state;
   }
 };
+
+function updateTableData(state: RootState, action: FetchTableDataSuccess) {
+  const {response, params} = action;
+  const {vehicles, dealers} = response;
+  return update(state, {
+    vehicles: vehicles.data,
+    dealers,
+    pagination: update(params.pagination, {
+      total: vehicles.headers['x-total-count']
+    }),
+    loading: false,
+  });
+}

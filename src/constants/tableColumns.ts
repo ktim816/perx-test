@@ -35,7 +35,7 @@ export const TABLE_COLUMNS: ColumnsType<any> = [{
   ellipsis: true,
   render: (_, {dealer}) => {
     const toAddress = (dealer: any) => dealer.address;
-    return dealer.offices.map(toAddress).join(', ');
+    return dealer?.offices?.map(toAddress).join(', ');
   },
   key: 'address',
 }];

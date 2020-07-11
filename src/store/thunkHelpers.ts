@@ -26,16 +26,16 @@ export const toDealerId = (el: any) => {
   return el.dealer;
 };
 
-export const getDealerIds = async (data: any[]): Promise<any> => {
+export const getDealerIds = (data: any[]): string[] => {
   return data
     .map(toDealerId)
     .filter(exist);
 };
 
-export const updateDealer = (dealers: AxiosResponse<any>) => {
+export const updateDealer = (dealers: any[]) => {
   return (el: any) => {
     const dealerId = el.dealer;
-    el.dealer = dealers.data.find((dealer: any) => dealer.id === dealerId);
+    el.dealer = dealers.find((dealer: any) => dealer.id === dealerId);
   };
 };
 
@@ -44,7 +44,7 @@ export const getCurrentPage = (page: number | undefined): number => {
   return page - 1;
 };
 
-export const getUpdatedVehicles = (vehicles: AxiosResponse<any>, dealers: AxiosResponse<any>) => {
+export const getUpdatedVehicles = (vehicles: AxiosResponse<any>, dealers: any[]) => {
   const updated = update(vehicles);
   updated.data.forEach(updateDealer(dealers));
   return updated;

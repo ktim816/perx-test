@@ -26,26 +26,33 @@ const initialState: RootState = {
 };
 
 export default (state = initialState, action: ActionCreators): RootState => {
+
   switch (action.type) {
+
     case actionTypes.FETCH_TABLE_DATA_START:
       return update(state, {
         loading: true,
       });
+
     case actionTypes.FETCH_TABLE_DATA_SUCCESS:
       return updateTableData(state, action);
+
     case actionTypes.FETCH_TABLE_DATA_ERROR:
       return update(state, {
         loading: false,
         error: action.error
       });
+
     default:
       return state;
   }
 };
 
 function updateTableData(state: RootState, action: FetchTableDataSuccess) {
+
   const {response, params} = action;
   const {vehicles, dealers} = response;
+
   return update(state, {
     vehicles: vehicles.data,
     dealers,

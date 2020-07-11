@@ -4,14 +4,13 @@ import {ThunkDispatch} from 'redux-thunk';
 import {Action} from 'redux';
 import {RootState, TableChangedProps} from '@/types';
 import isEmpty from 'lodash/isEmpty';
+import Api from '@/api';
 
 import {
   uniq,
 } from '@/helpers';
 
 import {
-  fetchVehicles,
-  fetchDealers,
   getDealerIds,
   getCurrentPage,
   getUpdatedVehicles,
@@ -33,12 +32,15 @@ export function fetchTableData(params: TableChangedProps) {
     try {
 
       // fetch vehicles with params
-      const vehicles = await fetchVehicles({ 
-        state: 'active',
-        hidden: false,
-        group: 'new',
-        per_page: pagination.pageSize,
-        page: getCurrentPage(pagination.current),
+      const vehicles = await Api.fetch('/vehicles', {
+        headers: {'X-CS-Dealer-Id-Only': 1},
+        params: {
+          state: 'active',
+          hidden: false,
+          group: 'new',
+          per_page: pagination.pageSize,
+          page: getCurrentPage(pagination.current),
+        }
       });
 
       const vehicleDealerIds = getDealerIds(vehicles.data);
@@ -51,8 +53,10 @@ export function fetchTableData(params: TableChangedProps) {
       if (!isEmpty(uniqDealerIds)) {
 
         // fetch dealers with params
-        newDealers = await fetchDealers({
-          id__in: uniqDealerIds.join(','),
+        newDealers = await Api.fetch('/dealers', {
+          params: {
+            id__in: uniqDealerIds.join(','),
+          }
         });
       }
 

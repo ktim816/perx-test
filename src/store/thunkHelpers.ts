@@ -1,41 +1,23 @@
 import {AxiosResponse} from 'axios';
 
 import {
-  axios,
-} from '@/api';
-
-import {
   update,
-  parseURLParams,
   exist,
 } from '@/helpers';
 
-export const fetchVehicles = (params = {}): Promise<AxiosResponse<any>> => {
-  return axios.get(`/vehicles/${parseURLParams(params)}`, {
-    headers: {
-      'X-CS-Dealer-Id-Only': 1,
-    }
-  });
-};
-
-export const fetchDealers = (params = {}): Promise<AxiosResponse<any>> => {
-  return axios.get(`/dealers/${parseURLParams(params)}`);
-};
-
-export const toDealerId = (el: any) => {
-  return el.dealer;
-};
-
 export const getDealerIds = (data: any[]): string[] => {
+  const getDealer = (el: any) => el.dealer;
   return data
-    .map(toDealerId)
+    .map(getDealer)
     .filter(exist);
 };
 
 export const updateDealer = (dealers: any[]) => {
+  let dealerId: string | undefined;
+  const getById = (el: any) => el.id === dealerId;
   return (el: any) => {
-    const dealerId = el.dealer;
-    el.dealer = dealers.find((dealer: any) => dealer.id === dealerId);
+    dealerId = el.dealer;
+    el.dealer = dealers.find(getById);
   };
 };
 

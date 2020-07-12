@@ -1,8 +1,7 @@
 import axios, {AxiosRequestConfig, AxiosResponse} from 'axios';
 
-import {
-  update,
-} from '@/helpers';
+axios.defaults.baseURL = 'https://jlr-connect.com/carstock/api/v1/';
+axios.defaults.responseType = 'json';
 
 export default class Api {
 
@@ -10,9 +9,6 @@ export default class Api {
     url: string,
     config?: AxiosRequestConfig
   ): Promise<AxiosResponse<any>> => {
-    return axios.get(`${url}/`, update(config, {
-      baseURL: 'https://jlr-connect.com/carstock/api/v1/',
-      responseType: 'json',
-    }));
+    return axios.get(`${url}/`, config);
   }
 };

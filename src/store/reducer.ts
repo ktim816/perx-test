@@ -48,7 +48,10 @@ export default (state = initialState, action: ActionCreators): RootState => {
   }
 };
 
-function updateTableData(state: RootState, action: FetchTableDataSuccess) {
+function updateTableData(
+  state: RootState,
+  action: FetchTableDataSuccess
+): RootState {
 
   const {response, params} = action;
   const {vehicles, dealers} = response;

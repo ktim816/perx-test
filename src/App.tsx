@@ -17,6 +17,7 @@ import {
 const getDataLoading = (state: RootState) => state.loading;
 const getVehicles = (state: RootState) => state.vehicles;
 const getPagination = (state: RootState) => state.pagination;
+const generateId = (): string => uniqid();
 
 const layoutStyles = {
   padding: 90,
@@ -43,7 +44,7 @@ const App: React.FC = () => {
     <Layout style={layoutStyles}>
       <Table
         columns={TABLE_COLUMNS}
-        rowKey={() => uniqid()}
+        rowKey={generateId}
         dataSource={vehicles}
         pagination={pagination}
         loading={dataLoading}

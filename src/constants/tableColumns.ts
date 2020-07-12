@@ -29,7 +29,7 @@ export const TABLE_COLUMNS: ColumnsType<any> = [{
   title: 'Dealer',
   dataIndex: ['dealer', 'name'],
   key: 'dealer',
-  width: '15%',
+  width: '13%',
 }, {
   title: 'Address',
   ellipsis: true,
